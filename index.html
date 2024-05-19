@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiểm tra hoạt động trình duyệt và phóng to</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    transition: transform 0.3s; /* Thêm hiệu ứng transition cho phóng to */
+  }
+  .container {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="container" id="mainContent">
+  <h1>Chào mừng bạn đến với trang web</h1>
+  <p>Nhấn vào nút dưới để kiểm tra hoạt động trình duyệt và phóng to màn hình.</p>
+  <button id="checkButton">Kiểm tra và phóng to</button>
+</div>
+
+<div class="container" id="nonViolationContent" style="display: none;">
+  <h1>Bài kiểm tra thường kỳ</h1>
+  <p>Hãy làm bài kiểm tra của bạn.</p>
+	<p>see you alter!</p>
+  <p>Nếu thoát ra ngoài bạn sẽ vi phạm nội quy</p>
+  <button id="resetButton">Quay lại</button>
+</div>
+
+<script>
+let isBrowserActive = true; // Biến để kiểm tra trạng thái hoạt động của trình duyệt
+
+// Xử lý khi nhấn nút "Kiểm tra và phóng to"
+document.getElementById('checkButton').addEventListener('click', function() {
+    // Phóng to màn hình
+    document.body.style.transform = 'scale(1.5)'; // Phóng to tỷ lệ 1.5 lần
+
+    // Chuyển sang giao diện thông báo vi phạm
+    document.getElementById('mainContent').style.display = 'none';
+    document.getElementById('nonViolationContent').style.display = 'block';
+
+    // Kiểm tra liên tục trạng thái của trang
+    const checkActivityInterval = setInterval(function() {
+        if (!document.hasFocus()) {
+            // Nếu trang không còn hoạt động (chuyển sang tab khác)
+            clearInterval(checkActivityInterval); // Dừng interval
+
+            // Hiển thị thông báo vi phạm ngay lập tức
+            const confirmationMessage = 'Bạn đang rời khỏi trang web mà không được phép.';
+            console.log(confirmationMessage);
+            alert(confirmationMessage);
+
+            // Quay lại giao diện ban đầu
+            document.body.style.transform = 'scale(1)'; // Đặt lại tỷ lệ phóng to về mặc định
+            document.getElementById('nonViolationContent').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+    }, 1000); // Kiểm tra mỗi 1 giây (1000ms)
+});
+
+// Xử lý khi nhấn nút "Quay lại"
+document.getElementById('resetButton').addEventListener('click', function() {
+    // Quay lại giao diện ban đầu
+    document.body.style.transform = 'scale(1)'; // Đặt lại tỷ lệ phóng to về mặc định
+    document.getElementById('nonViolationContent').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+});
+</script>
+</body>
+</html>
